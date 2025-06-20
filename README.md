@@ -64,13 +64,24 @@ Answer -  The node_time_seconds shows current time in second on the monitor node
 The lab uses node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes to calculate memory usage. Research and explain why this approach is preferred over using node_memory_MemFree_bytes. What's the fundamental difference between "free" and "available" memory in Linux systems, and how does this impact monitoring accuracy?
 
 
-Answer -  
+Answer -  Using node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes gives a more realistic picture of memory usage than subtracting MemFree.
+Why?
+
+MemFree reflects only completely unused memory.
+
+MemAvailable includes reclaimable caches and buffers, showing memory that can actually be repurposed.
+Linux optimizes performance by caching aggressively, so MemFree often appears low—even when ample memory is available.
+Impact: Using MemFree can trigger false low-memory alerts. In practice, monitoring based on MemAvailable avoids unnecessary concerns and better reflects real resource availability.
+
+
       
-Analyze this filesystem usage query
+
 
 ## Question 6: Filesystem Query Analysis
 1 - (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"})
 Break down the mathematical logic, explain why the result needs to be subtracted from 1, and discuss what could go wrong if you monitoring multiple mount points with this approach. How would you modify this query to exclude temporary filesystems?
+
+
 
 ## Section 3: Visualization and Dashboard Design
 Question 7: Visualization Type Justification
