@@ -4,8 +4,8 @@ This project can be implemented on any Linux-based Server or local machine. Howe
 
 ### Prerequisite
 
-i) AWS EC2 instance running on ubuntu with git and docker installed.
-ii) Basic knowledge of docker, linux cli, prometheus, and grafana
+- AWS EC2 instance running on ubuntu with git and docker installed.
+- Basic knowledge of docker, linux cli, prometheus, and grafana
 
 ### Sever Setup (Containerized Prometheus, Grafana, and Node Exporter)
 

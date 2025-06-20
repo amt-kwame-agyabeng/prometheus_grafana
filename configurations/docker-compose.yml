@@ -37,9 +37,9 @@ services:
     environment:
       - GF_SMTP_ENABLED=true
       - GF_SMTP_HOST=smtp.gmail.com:587
-      - GF_SMTP_USER=kwameagyabeng63@gmail.com
-      - GF_SMTP_PASSWORD=
-      - GF_SMTP_FROM_ADDRESS=kwameagyabeng63@gmail.com
+      - GF_SMTP_USER=dummy3@gmail.com
+      - GF_SMTP_PASSWORD=idybuawdpqnowvdt
+      - GF_SMTP_FROM_ADDRESS=dummy3@gmail.com
       - GF_SMTP_FROM_NAME=Grafana Alerts
       - GF_SMTP_SKIP_VERIFY=true
 
