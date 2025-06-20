@@ -103,5 +103,34 @@ Describe a systematic approach to troubleshooting when Prometheus shows a target
 
 After running the lab, analyze the query performance of your dashboards. Identify which queries might be expensive and explain why. Propose optimization strategies for both PromQL queries and Grafana dashboard design. How would you monitor the monitoring system itself?
 
+Costly queries I've recognized: # This is costly - computes across all time series rate(node_cpu_seconds_total[5m]) 
+ Improved - more precise rate(node_cpu_seconds_total{mode="idle"}[5m]) 
+ Tactics for enhancing query performance: 
+ • Employ recording regulations for intricate computations 
+ • Restrict time intervals in searches 
+ • Utilize particular label selectors 
+ • Steer clear of functions that necessitate a complete series scan. 
+ Dashboard enhancement: 
+ • Decrease update frequency for unchanging data 
+ • Implement query caching 
+ • Restrict simultaneous queries for each dashboard 
+ • Aggregate data in advance using recording rules
+Overseeing the monitoring system: 
+Performance metrics of Prometheus 
+- prometheus_rule_evaluation_time_seconds 
+- prometheus_tsdb_compaction_time_seconds up{job="prometheus"}
+
 ## Question 15: Capacity Planning Scenario
 You notice that Prometheus is consuming increasing amounts of disk space over time. Analyze the factors that contribute to storage growth, calculate retention policies based on business requirements, and design a data lifecycle management strategy. How would you balance historical data availability with resource constraints?
+
+ Active series count - Additional servers result in more metrics. 
+ 2 Scrape interval - 15s versus 60s increases storage requirements fourfold. 
+ 3 Retention duration - 30 days versus 365 days 
+ 4 Series cardinality - Labels with high cardinality significantly increase storage requirements. 
+ Calulation of retention policy: Daily storage = (active_series × samples_per_day × bytes_per_sample) Total storage = daily_storage × retention_days × compression_factor Data lifecycle management approach:
+• Tier 1 (0-7 days): Rapid SSD storage with high resolution 
+• Tier 2 (7-30 days): Regular storage, downsampled • Tier 3 (30+ days): Significantly compressed, cold storage 
+• Archive (1+ years): Transfer to data lake for regulatory adherence Equilibrating historical information against resources: 
+• Utilize recording rules to pre-compute essential queries 
+• Transfer essential metrics to permanent storage 
+• Routine removal of unnecessary metrics
